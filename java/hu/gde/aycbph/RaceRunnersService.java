@@ -40,19 +40,18 @@ public class RaceRunnersService {
             if (!laptimes.isEmpty()) {
                 return (double) totalTime / laptimes.size();
             } else {
-                // handle error when lap times are not found
+
                 return 0.0;
             }
         } else {
-            // handle error when runner is not found
+
             return -1.0;
         }
     }
 
     @Transactional
     public void addRunner(RunnerEntity runner) {
-        // Itt lehet végezni a szükséges ellenőrzéseket vagy validációkat,
-        // majd hozzáadni a futót az adatbázishoz a RunnerRepository segítségével
+
         System.out.println("RRS addR");
         runnerRepository.save(runner);
     }
@@ -74,15 +73,14 @@ public class RaceRunnersService {
 
         runner.getRaces().add(race);
         runnerRepository.save(runner);
-        //getAverageLaptime(runnerId);
-        //generateLapTimeForRunnerAndRace(runner, race);
+
 
 
         System.out.println("RRS addRnunner " + runner + " race: " + race + " average: " + getAverageLaptime(runnerId));
 
 
     }
-    // Generate lap time for the runner and associate it with the race
+
     @Transactional
     public void generateLapTimeForRunnerAndRace(LapTimeEntity lapTimeEntity, int i, RunnerEntity runner, RaceEntity race) {
         Random random = new Random();
@@ -95,23 +93,19 @@ public class RaceRunnersService {
         lapTime.setRunner(runner);
         lapTime.setRace(race);
 
-        // Set average pace for the runner
         long averagePace = random.nextInt(100) + 1;
         runner.setAveragePace(averagePace);
 
-        // Add lap time to the runner
-        //runner.getLapTimes().add(lapTime);
-        System.out.println("RaceRunnerC gener");
-        // Hozzáadod a LapTimeEntity-t a versenyhez és a futóhoz
+
         race.addLapTime(lapTime);
         runner.addLapTime(lapTime);
 
-        // A verseny LapTime-kat tartalmazó listájához hozzáadod a lapTime objektumot
+
         race.getLapTimes().add(lapTime);
-        // A futó LapTime-kat tartalmazó listájához is hozzáadod a lapTime objektumot
+
         runner.getLapTimes().add(lapTime);
 
-        // A futóhoz tartozó versenyek LapTime-kat tartalmazó listájához is hozzáadod a lapTime objektumot
+
         runner.getRaces().forEach(r -> r.getLapTimes().add(lapTime));
         try {
             calculateAverageRunningTime(runner.getRunnerId());
@@ -134,11 +128,9 @@ public class RaceRunnersService {
             double totalTime = lapTimes.stream().mapToDouble(LapTimeEntity::getTimeSecond).sum();
             result = totalTime / lapTimes.size();
         } else {
-            // Ha nincsenek lapidők, akkor az átlagos idő 0.0 lesz
+
             result = 0.0;
         }
-
-        // Az átlagos időt most már lehet használni
         System.out.println("Average running time for runner " + runnerId + ": " + result);
     }
 
@@ -149,15 +141,10 @@ public class RaceRunnersService {
                 .orElseThrow(() -> new RuntimeException("Runner not found"));
 
         List<RaceEntity> races = runner.getRaces();
-        //for (RaceEntity race : races) generateLapTimeForRunnerAndRace(new LapTimeEntity(), 250, runner, race);
-        for (RaceEntity race : races) generateLapTimeForRunnerAndRace(new LapTimeEntity(), 250, runner, race);{
-            // Hozzáadod ugyanazt a lapTime objektumot minden versenyhez
-            //race.addLapTime(lapTime);
 
+        for (RaceEntity race : races) generateLapTimeForRunnerAndRace(new LapTimeEntity(), 250, runner, race);{
 
         }
-
-        // Mentsd el a változtatásokat az adatbázisban
         runnerRepository.save(runner);
     }
 }

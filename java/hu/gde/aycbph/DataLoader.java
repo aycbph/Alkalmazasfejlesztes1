@@ -65,7 +65,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("R3" + runner3);
 
 
-        // Ellenőrizze, hogy a runnerek adatbázisba kerültek-e, és írja ki a konzolra
+
         if (runnerRepository.count() > 0) {
             System.out.println("A runnerek adatbázisba kerültek.");
         } else {
@@ -85,9 +85,8 @@ public class DataLoader implements CommandLineRunner {
         raceRunnersService.addLapTimeToRunner(runner1.getRunnerId());
 
 
-        for (RaceEntity race : raceRepository.findAll()) {
-            //for (RaceEntity race : raceRepository.findAll()) {}
-            // Kiírjuk a race1-hez rendelt runnerek nevét és generált lapidejét
+
+
             raceRunnersService.generateLapTimeForRunnerAndRace(new LapTimeEntity(), 250, runner1, race1);
 
             race1.getRunners().add(runner1);
@@ -99,9 +98,7 @@ public class DataLoader implements CommandLineRunner {
 
             runner1.getRaces().add(race1);
             runnerRepository.save(runner1);
-            //race.addLapTime(lapTimeRepository.getReferenceById(runner1.getRunnerId()));
 
-            //raceRunnersService.generateLapTimeForRunnerAndRace(new LapTimeEntity(), 250, runner1, race2);
 
             System.out.println("Runner11 " + race1 + " hozzárendelve a versenyhez " + race1 + ":");
             for (LapTimeEntity laptime : race1.getLapTimes()) {
@@ -110,7 +107,7 @@ public class DataLoader implements CommandLineRunner {
             }
 
 
-// Kiírjuk a race2-höz rendelt runnerek nevét és generált lapidejét
+
             for (RunnerEntity runner : runnerRepository.findAll()) {
                 //raceRunnersService.generateLapTimeForRace(runner, race2);
                 System.out.println("Runner22 " + runner1 + " hozzárendelve a versenyhez " + runner1.getRaces() + ":");
@@ -119,7 +116,7 @@ public class DataLoader implements CommandLineRunner {
                 }
             }
 
-            // Ellenőrizheted, hogy a futókat sikeresen hozzárendelték-e a versenyhez
+
             if (raceRepository.count() > 0) {
                 System.out.println("A futó hozzárendelésre került a versenyhez.");
             } else {
@@ -129,6 +126,6 @@ public class DataLoader implements CommandLineRunner {
             // Ellenőrizzük a mentett adatokat
             System.out.println("A futók és a laptimes-ek sikeresen hozzá lettek adva a versenyekhez.");
             //lapTime.getRunner().getRaces().add(race1); // Verseny hozzáadása
-        }
+
     }
 }

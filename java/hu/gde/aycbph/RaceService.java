@@ -23,8 +23,7 @@ public class RaceService {
 
 
     public void addRace(RaceEntity race) {
-        // Itt lehet végezni a szükséges ellenőrzéseket vagy validációkat,
-        // majd hozzáadni a futót az adatbázishoz a RunnerRepository segítségével
+
         raceRepository.save(race);
     }
     public double getAverageLaptime(Long raceId) {

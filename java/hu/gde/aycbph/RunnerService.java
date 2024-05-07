@@ -181,7 +181,6 @@ public class RunnerService {
         lapTime.setRunner(runner);
         lapTime.setRace(race);
 
-        // Set average pace for the runner
         long averagePace = random.nextInt(100) + 1;
         runner.setAveragePace(averagePace);
 

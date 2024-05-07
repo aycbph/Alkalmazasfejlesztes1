@@ -32,10 +32,6 @@ public class RaceRunnersController {
         RunnerEntity runner = runnerRepository.findById(runnerId)
                 .orElseThrow(() -> new RuntimeException("Runner not found"));
 
-        //raceRunnersService.addRunnerToRace(race.getRaceId(), runner.getRunnerId());
-
-        // Generate lap time for the runner and associate it with the race
-        //generateLapTimeForRunnerAndRace(runner, race);
 
         // Save the changes to the database
         runnerRepository.save(runner);
@@ -49,7 +45,6 @@ public class RaceRunnersController {
         RunnerEntity runner = runnerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Runner not found"));
 
-        // Set the lap time's runner
         lapTime.setRunner(runner);
 
         // Set the lap time's race
@@ -59,10 +54,8 @@ public class RaceRunnersController {
             throw new RuntimeException("Race not specified for lap time");
         }
 
-        // Add the lap time to the runner
         runner.getLapTimes().add(lapTime);
 
-        // Save the changes to the database
         runnerRepository.save(runner);
         lapTimeRepository.save(lapTime);
 
@@ -87,16 +80,8 @@ public class RaceRunnersController {
         RunnerEntity runner = runnerRepository.findById(runnerId)
                 .orElseThrow(() -> new RuntimeException("Runner not found"));
 
-
-
-        //raceRunnersService.getAverageLaptime(runnerId);
-        //raceRunnersService.getAverageLaptime(runnerId);
-
-
         System.out.println("RRC addRunner");
 
-        // Generate lap time for the runner and associate it with the race
-       // generateLapTimeForRunnerAndRace(runner, race);
 
         // Save the changes to the database
         runnerRepository.save(runner);
