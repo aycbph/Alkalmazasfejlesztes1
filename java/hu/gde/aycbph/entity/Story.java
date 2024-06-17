@@ -64,4 +64,10 @@ public class Story {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Story{" +
+                "title='" + title + '\'' +
+                '}';
+    }
 }
